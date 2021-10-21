@@ -1,4 +1,4 @@
-package main
+package task2
 
 import (
 	"fmt"
@@ -7,24 +7,31 @@ import (
 	"time"
 )
 
-func main() {
-	solveRandom()
-}
-
-func solve(sl []int32) {
-	var wg sync.WaitGroup
+func CountSquaresConc(sl []int32) []int32 {
+	var (
+		wg  sync.WaitGroup
+		res []int32
+	)
 	for i := 0; i < len(sl); i++ {
 		wg.Add(1)
 		go func() {
-			fmt.Printf("%d\t ", sl[i]*sl[i])
+			res = append(res, sl[i]*sl[i])
 			wg.Done()
 		}()
 		time.Sleep(time.Millisecond)
 	}
 	wg.Wait()
+	return res
 }
 
-func solveRandom() {
+func Solve(sl []int32) {
+	res := CountSquaresConc(sl)
+	for i := 0; i < len(res); i++ {
+		fmt.Printf("%d\t", res[i])
+	}
+}
+
+func SolveRandom() {
 	rand.Seed(time.Now().UnixNano())
 	var (
 		amountOfArrays = rand.Int31n(9) + 1
@@ -37,10 +44,10 @@ func solveRandom() {
 		fmt.Printf("\n#Case%d -> ", i+1)
 		for j := 0; j < int(lengthOfArray); j++ {
 			tmpSlice = append(tmpSlice, rand.Int31n(9)+1)
-			fmt.Printf("%d\t ", tmpSlice[j])
+			fmt.Printf("%d\t", tmpSlice[j])
 		}
 		fmt.Printf("\nAnswer -> ")
-		solve(tmpSlice)
+		Solve(tmpSlice)
 		fmt.Printf("\n")
 		wg.Wait()
 	}

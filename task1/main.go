@@ -1,4 +1,4 @@
-package main
+package task1
 
 type Human struct {
 	name string
@@ -26,7 +26,7 @@ func (h *Action) printName() {
 	println("Name of dude with age", h.age, "is", h.name)
 }
 
-func main() {
+func Solve() {
 	var a Action = Action{
 		Human: Human{age: 12, name: "Pavel"},
 		id:    "Run",
