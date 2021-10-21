@@ -11,6 +11,19 @@ func main() {
 	solveRandom()
 }
 
+func solve(sl []int32) {
+	var wg sync.WaitGroup
+	for i := 0; i < len(sl); i++ {
+		wg.Add(1)
+		go func() {
+			fmt.Printf("%d\t ", sl[i]*sl[i])
+			wg.Done()
+		}()
+		time.Sleep(time.Millisecond)
+	}
+	wg.Wait()
+}
+
 func solveRandom() {
 	rand.Seed(time.Now().UnixNano())
 	var (
@@ -24,17 +37,10 @@ func solveRandom() {
 		fmt.Printf("\n#Case%d -> ", i+1)
 		for j := 0; j < int(lengthOfArray); j++ {
 			tmpSlice = append(tmpSlice, rand.Int31n(9)+1)
-			fmt.Printf("\t%d ", tmpSlice[j])
+			fmt.Printf("%d\t ", tmpSlice[j])
 		}
 		fmt.Printf("\nAnswer -> ")
-		for j := 0; j < len(tmpSlice); j++ {
-			wg.Add(1)
-			go func(num int32) {
-				fmt.Printf("\t%d ", num*num)
-				wg.Done()
-			}(tmpSlice[j])
-			time.Sleep(time.Millisecond)
-		}
+		solve(tmpSlice)
 		fmt.Printf("\n")
 		wg.Wait()
 	}
