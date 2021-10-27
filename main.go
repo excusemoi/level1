@@ -1,7 +1,9 @@
 package main
 
-import "level1/task1"
+import "level1/task4"
 
 func main() {
-	task1.Solve()
+	task4.Solve()
 }
+
+

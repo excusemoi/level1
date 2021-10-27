@@ -14,19 +14,19 @@ func (h *Human) printName() {
 }
 
 type Action struct {
-	Human
+	Human //встраивание
 	id string
 }
 
-func (h *Action) printAge() {
+func (h *Action) printAge() { //переопределение метода
 	println("Age of", h.name, "is", h.age)
 }
 
-func (h *Action) printName() {
+func (h *Action) printName() { //переопределение метода
 	println("Name of dude with age", h.age, "is", h.name)
 }
 
-func Solve() {
+func Solve() { //демонстрационныая функцияы
 	var a Action = Action{
 		Human: Human{age: 12, name: "Pavel"},
 		id:    "Run",
