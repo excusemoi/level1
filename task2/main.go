@@ -11,15 +11,16 @@ func CountSquaresConc(sl []int64) []int64 {
 	var (
 		wg  sync.WaitGroup //для создания группы выполняющихся горутин
 		res []int64
+		m sync.Mutex
 	)
 	for i := 0; i < len(sl); i++ {
 		wg.Add(1) //увеличиваем счётчик на 1
 		go func(n int64) {
 			wg.Done() //уменьшаем счётчик
+			m.Lock()
 			res = append(res, n*n)
+			m.Unlock()
 		}(sl[i])
-		time.Sleep(time.Microsecond) /*ожидание завершения горутины (поддержание порядка)
-		                               невозможно предугадать порядок выполнение горутин*/
 	}
 	wg.Wait() // ждём окочания работы горутин
 	return res

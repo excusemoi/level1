@@ -120,8 +120,8 @@ func main() {
 	for i := 0; i < 5; i++ {
 		wg.Add(1)
 		go func(wg sync.WaitGroup, i int) { //неявно создастся копия на структуру waitGroup
-			fmt.Println(i)                  //по итогу у нас 5 членов группы (горутин), ни один из
-                                            //элементов которой так и не вызовет Done() внутри тела
+			fmt.Println(i)                  //5 add 0 done
+
 			wg.Done()                       //результат - deadlock
 		}(wg, i)
 	}

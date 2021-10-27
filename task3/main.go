@@ -14,12 +14,15 @@ func Solve(sl []int64) {
 func CountArraySumConc(sl []int64) int64 {
 	var sum int64
 	var wg sync.WaitGroup
+	var m sync.Mutex
 
 	for i := 0; i < len(sl); i++ {
 		wg.Add(1)
 		go func(n int64) {
 			wg.Done()
+			m.Lock()
 			sum += n
+			m.Unlock()
 		}(sl[i])
 	}
 	wg.Wait()
@@ -30,11 +33,14 @@ func CountSquaresConc(sl []int64) []int64 {
 	var (
 		wg  sync.WaitGroup
 		res []int64
+		m sync.Mutex
 	)
 	for i := 0; i < len(sl); i++ {
 		wg.Add(1)
 		go func(n int64) {
+			m.Lock()
 			res = append(res, n*n)
+			m.Unlock()
 			wg.Done()
 		}(sl[i])
 	}
